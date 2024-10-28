@@ -6,6 +6,10 @@
     <title>計算BMI</title>
 </head>
 <body>
+    <div>
+    <a href="index.html">回首頁</a>
+    </div>
+
 <?php 
     if(isset($_GET['bmi'])){
         echo "你上一次量測的BMI為{$_GET['bmi']}";
@@ -13,7 +17,7 @@
 
     ?>
     <h1>計算BMI-GET</h1>
-<form action="result.php" method>
+<form action="result.php" method="get">
 <div>
 <label for="height">身高:</label>
 
@@ -31,7 +35,7 @@
 </div>
 </form>
 <h1>計算BMI-POST</h1>
-<form action="result.php" method>
+<form action="result.php" method="post">
 <div>
 <label for="height">身高:</label>
 
