@@ -7,7 +7,7 @@
 </head>
 <body>
     <h1>萬年曆</h1>
-    <!-- <style>
+  <style>
     table{
         border-collapse:collapse;
 
@@ -42,7 +42,7 @@
     <td>五</td>
     <td>六</td>
 </tr>
-<?php
+<?php 
 $d=strtotime("2024-6");
 $firstDayWeek=date("w",strtotime(date("Y-m-1")));
 
@@ -64,9 +64,9 @@ for($i=0;$i<6;$i++){
 
 }
 
-?> -->
+?> 
 </table>
-<h3><?php echo date("m月");?></h3>
+
 <table>
     <ul>
         <li>有上一個月下一個月的按鈕</li>
@@ -75,8 +75,36 @@ for($i=0;$i<6;$i++){
         <li></li>
         <li></li>
     </ul>
-<a href="">上一個月</a> <a href="">下一個月</a>
+    <?php
+if(isset($_GET['month'])){
+    $month=$_GET['month'];
+}else{
+    $month=date("m");
+}
+if(isset($_GET['year'])){
+    $year=$_GET['year'];
+}else{
+    $year=date("y");
+}
 
+if($month-1<1){
+    $prevmonth=12;
+    $preyear=$year-1;
+}else{
+    $premonth=$month-1;
+    
+}
+if($moth+1>12){
+    $nextmonth=1;
+    $nextmonth=$year+1;
+}
+
+    ?>
+    <a href="calendar.php?year=<?=$year-1;?>">前年</a>
+<a href="calendar.php?month=<?=$premonth-1;?>">上一個月</a> <a href="calendar.php?month=<?=$premonth+1;?>">下一個月</a>
+<a href="calendar.php?year=<?=$year+1;?>">明年</a>
+<h3><?php echo date ("{$year}年")?></h3>
+<h3><?php echo date ("{$month}月")?></h3>
 <tr>
     <td></td>
     <td>日</td>
@@ -88,11 +116,7 @@ for($i=0;$i<6;$i++){
     <td>六</td>
 </tr>
 <?php
-if(isset($_GET['month'])){
-    $month=$_GET['month'];
-}else{
-    $month=date("m");
-}
+
 $firstDay=date("2024-{$month}-1");
 $firstDayTime=strtotime($firstDay);
 $firstDayWeek=date("w",strtotime(date("Y-m-1")));
