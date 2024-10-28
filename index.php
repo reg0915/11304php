@@ -10,12 +10,17 @@
 <form action="result.php" method>
 <div>
 <label for="height">身高:</label>
-<input type="number" name="height" id="height">
+
+<input type="number" name="height" id="height">cm
 </div>
 
 <div>
     <label for="weight">體重:</label>
-    <input type="number" name="weight" id="weight">
+    <input type="number" name="weight" id="weight">kg
+</div>
+<div>
+    <input type="submit" value="計算">
+    <input type="submit" value="清空/重置">
 </div>
 </form>
 
