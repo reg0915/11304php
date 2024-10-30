@@ -10,12 +10,14 @@
   <style>
     table{
         border-collapse:collapse;
+        margin:auto;
 
     }
     td{
         padding:5px 10px;
         text-align: center;
         border:1px solid #999;
+        width: 65px;
     }
     .holiday{
         background:pink;
@@ -29,51 +31,22 @@
         color:white;
         font-weight:bolder;
     }
-</style>
-<h3><?php echo date("m月");?></h3>
-<table>
-<tr>
-    <td></td>
-    <td>日</td>
-    <td>一</td>
-    <td>二</td>
-    <td>三</td>
-    <td>四</td>
-    <td>五</td>
-    <td>六</td>
-</tr>
-<?php 
-$d=strtotime("2024-6");
-$firstDayWeek=date("w",strtotime(date("Y-m-1")));
-
-for($i=0;$i<6;$i++){
-    echo "<tr>";
-    echo "<td>";
-    echo $i+1;
-    echo "</td>";
-    for($j=0;$j<7;$j++){
-        echo "<td>";
-        $dayNum=$i*7 + $j +1 - $firstDayWeek;
-        if($dayNum<=date('t') && $dayNum >0){
-            echo $dayNum;
-        }
-        echo "</td>";
+    .nav{
+        width: 688px;
+        margin: auto;
     }
+    .nav table td{
+        border:0px;
+        padding: 0;
+    }
+</style>
 
-    echo "</tr>";
 
-}
 
-?> 
-</table>
-
-<table>
     <ul>
         <li>有上一個月下一個月的按鈕</li>
         <li>萬年曆都在同一個頁面同一個檔案</li>
         <li>有前年和來年的按鈕</li>
-        <li></li>
-        <li></li>
     </ul>
     <?php
 if(isset($_GET['month'])){
@@ -84,27 +57,60 @@ if(isset($_GET['month'])){
 if(isset($_GET['year'])){
     $year=$_GET['year'];
 }else{
-    $year=date("y");
+    $year=date("Y");
 }
 
 if($month-1<1){
     $prevmonth=12;
-    $preyear=$year-1;
+    $prevyear=$year-1;
 }else{
-    $premonth=$month-1;
+    $prevmonth=$month-1;
+    $prevyear=$year;
     
 }
-if($moth+1>12){
-    $nextmonth=1;
-    $nextmonth=$year+1;
+if($month+1>12){
+    $nextmonth=$month;
+    $nextyear=$year+1;
+}else{
+    $nextmonth=$month+1;
+    $nextyear=$year;
 }
 
+$spDate=[
+    '2024-11-07'=>"立冬",
+    '2024-06-10' => "端午節",
+    '2024-09-17' => "中秋節",
+    '2025-06-20' => "端午節",
+    '2025-09-27' => "中秋節",
+    '2026-06-30' => "端午節",
+    '2026-10-07' => "中秋節",
+    '2024-11-22'=>'小雪'
+];
+
+$holiday=[
+    '01-01'=> "元旦"
+];
+
     ?>
-    <a href="calendar.php?year=<?=$year-1;?>">前年</a>
-<a href="calendar.php?month=<?=$premonth-1;?>">上一個月</a> <a href="calendar.php?month=<?=$premonth+1;?>">下一個月</a>
-<a href="calendar.php?year=<?=$year+1;?>">明年</a>
-<h3><?php echo date ("{$year}年")?></h3>
-<h3><?php echo date ("{$month}月")?></h3>
+ <div class='nav'>
+    <table style="width:100%">
+        <tr>
+            <td style='text-align:left'>
+                <a href="calendar.php?year=<?php echo $year - 1; ?>">前年</a>
+                <a href="calendar.php?year=<?php echo $prevyear; ?>&month=<?php echo $prevmonth; ?>">上一個月</a>
+            </td>
+            <td>
+                <?php echo "{$month}月"; ?>
+                <?php echo "{$year}年"; ?>
+            </td>
+            <td style='text-align:right'>
+                <a href="calendar.php?year=<?php echo $nextyear; ?>&month=<?php echo $nextmonth; ?>">下一個月</a>
+                <a href="calendar.php?year=<?php echo $year + 1; ?>">明年</a>
+            </td>
+        </tr>
+    </table>
+</div>
+ <table>   
 <tr>
     <td></td>
     <td>日</td>
@@ -139,6 +145,15 @@ for($i=0;$i<6;$i++){
         
         echo "<td class='$isHoliday $theMonth $isToday'>";
         echo date("d",$theDayTime);
+// 使用陣列來增加日期的判斷
+        if(isset($spDate[date("Y-m-d",$theDayTime)])){
+            echo "<br>{$spDate[date("Y-m-d",$theDayTime)]}";
+        }
+        
+        if(isset($holidays[date("m-d",$theDayTime)])){
+            echo "<br>{$holidays[date("m-d",$theDayTime)]}";
+        }
+
         echo "</td>";
         
     }
