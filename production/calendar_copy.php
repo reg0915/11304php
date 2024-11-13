@@ -8,12 +8,14 @@
 <body>
     <h1>萬年曆</h1>
   <style>
-    table{
+    .table{
+        border-radius: 10px;
         border-collapse:collapse;
         margin:auto;
+olverflow:hidden
 
     }
-    td{
+    .td{
         padding:5px 10px;
         text-align: center;
         border:1px solid #999;
@@ -39,15 +41,9 @@
         border:0px;
         padding: 0;
     }
+
 </style>
 
-
-
-    <ul>
-        <li>有上一個月下一個月的按鈕</li>
-        <li>萬年曆都在同一個頁面同一個檔案</li>
-        <li>有前年和來年的按鈕</li>
-    </ul>
     <?php
 if(isset($_GET['month'])){
     $month=$_GET['month'];
@@ -96,16 +92,16 @@ $holiday=[
     <table style="width:100%">
         <tr>
             <td style='text-align:left'>
-                <a href="calendar.php?year=<?php echo $year - 1; ?>">前年</a>
-                <a href="calendar.php?year=<?php echo $prevyear; ?>&month=<?php echo $prevmonth; ?>">上一個月</a>
+                <a href="calendar_copy.php?year=<?php echo $year - 1; ?>">前年</a>
+                <a href="calendar_copy.php?year=<?php echo $prevyear; ?>&month=<?php echo $prevmonth; ?>">上一個月</a>
             </td>
             <td>
                 <?php echo "{$month}月"; ?>
                 <?php echo "{$year}年"; ?>
             </td>
             <td style='text-align:right'>
-                <a href="calendar.php?year=<?php echo $nextyear; ?>&month=<?php echo $nextmonth; ?>">下一個月</a>
-                <a href="calendar.php?year=<?php echo $year + 1; ?>">明年</a>
+                <a href="calendar_copy.php?year=<?php echo $nextyear; ?>&month=<?php echo $nextmonth; ?>">下一個月</a>
+                <a href="calendar_copy.php?year=<?php echo $year + 1; ?>">明年</a>
             </td>
         </tr>
     </table>
@@ -125,7 +121,7 @@ $holiday=[
 
 $firstDay=date("2024-{$month}-1");
 $firstDayTime=strtotime($firstDay);
-$firstDayWeek=date("w",strtotime(date("Y-m-1")));
+$firstDayWeek=date("w",$firstDayTime);
 
 for($i=0;$i<6;$i++){
     echo "<tr>";
@@ -150,8 +146,8 @@ for($i=0;$i<6;$i++){
             echo "<br>{$spDate[date("Y-m-d",$theDayTime)]}";
         }
         
-        if(isset($holidays[date("m-d",$theDayTime)])){
-            echo "<br>{$holidays[date("m-d",$theDayTime)]}";
+        if(isset($holiday[date("m-d",$theDayTime)])){
+            echo "<br>{$holiday[date("m-d",$theDayTime)]}";
         }
 
         echo "</td>";
