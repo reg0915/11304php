@@ -52,18 +52,29 @@
 </head>
 
 <body>
-    <form action="check_acc.php" method="POST"></form>
-    <div>
-        <label for="username">帳號</label>
-        <input type="text" name="username" id="username">
+    <?php
+if(isset($_GET['err'])){
+    echo "<h3 style='color:red;text-align:center'>帳號或密碼錯誤</h3>";
+}
+if(!isset($_COOKIE['login'])){
+    ?>
+    <div class="login-container">
+        <h2>登入</h2>
+        <form action="check_acc2.php" method="post">
+            <input type="text" name="acc" placeholder="使用者名稱" required>
+            <input type="password" name="pw" placeholder="密碼" required>
+            <input type="submit" value="登入">
+        </form>
     </div>
-    <div>
-        <label for="password">密碼</label>
-        <input type="password" name="password" id="password">
-    </div>
-    <div>
-        <input type="submit" value="登入">
-    </div>
+    <?php
+}else{
+?>
+        <div>
+            你已登入
+        </div>
+<?php
+}
+?>
 
 </body>
 
